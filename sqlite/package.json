@@ -1,0 +1,19 @@
+{
+  "name": "sqlite",
+  "version": "1.0.0",
+  "description": "nodejs-sqlite demo",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "src/app.js"
+  },
+  "keywords": [
+    "sqlite",
+    "nodejs",
+    "npm"
+  ],
+  "author": "naturestone",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^4.1.1"
+  }
+}
