@@ -7,14 +7,14 @@
  * 
  */
 
- // SQLite Guide
+// Load module
+var sqlite3 = require('sqlite3').verbose();
+
+// SQLite Guide
 const guide = 'https://www.sqlitetutorial.net/sqlite-nodejs/';
 
 // Absolute path to .sqlite-Database
 const database = __dirname + '/../data/data.sqlite';
-
-// Load module
-var sqlite3 = require('sqlite3').verbose();
 
 // Recordset of new user
 var newuser = [
@@ -36,13 +36,14 @@ let db = new sqlite3.Database(database, (err) => {
 
 // Insert new rows using db.run()
 newuser.forEach((value) => {
-    sql = `INSERT INTO user (NAME, DESC, ACTIVE) VALUES ('${value.NAME}','${value.DESC}',${value.ACTIVE})`;
-    console.log(`Insert: ${sql}`);
+    // build safe SQL statements using placeholder filling by db.run()
+    sql = `INSERT INTO user (NAME, DESC, ACTIVE) VALUES (?)`;
     if (false) {    // set to 'true' activates inserting
-        db.run(sql, (err) => {
+        db.run(sql, [value.NAME,value.DESC,value.ACTIVE], (err) => {
             if (err)
                 console.log(err.message)
             else {
+                console.log(`Insert: ${sql}`);
             }
         })            
     }
