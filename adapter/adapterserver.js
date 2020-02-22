@@ -26,6 +26,14 @@ app.listen(port, host, () => {
  console.log(`Server running. Try: http://${host}:${port}`);
 });
 
+var cnt = 0;
+
+app.use("/", (req, res, next) => {
+    cnt++;
+    console.log(cnt + " --- " + req.url);
+    next();
+})
+
 app.get("/users", (req, res, next) => {
     const exec = require("child_process").exec
     exec("cat /etc/passwd", (error, stdout, stderr) => {
@@ -36,6 +44,13 @@ app.get("/users", (req, res, next) => {
 app.get("/groups", (req, res, next) => {
     const exec = require("child_process").exec
     exec("cat /etc/group", (error, stdout, stderr) => {
+        res.send('<pre><code>' + stdout + '</code></pre>');
+    })
+});
+
+app.get("/net", (req, res, next) => {
+    const exec = require("child_process").exec
+    exec("ifconfig -a", (error, stdout, stderr) => {
         res.send('<pre><code>' + stdout + '</code></pre>');
     })
 });
