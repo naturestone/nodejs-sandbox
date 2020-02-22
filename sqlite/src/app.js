@@ -28,10 +28,10 @@ console.log('SQLite NodeJS Demo');
 
 // Open existing .sqlite-Database
 let db = new sqlite3.Database(database, (err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log(`Connected to the ${database} database.`);
+    if (err)
+        console.error(err.message);
+    else
+        console.log(`Connected to the ${database} database.`);
   });
 
 // Insert new rows using db.run()
