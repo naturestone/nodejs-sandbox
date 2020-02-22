@@ -1,0 +1,11 @@
+{
+  "name": "basics",
+  "version": "1.0.0",
+  "description": "nodejs basics ans samples",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "src/app.js"
+  },
+  "author": "naturestone",
+  "license": "ISC"
+}
