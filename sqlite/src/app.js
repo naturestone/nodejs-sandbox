@@ -7,12 +7,16 @@
  * 
  */
 
+ // SQLite Guide
 const guide = 'https://www.sqlitetutorial.net/sqlite-nodejs/';
 
+// Absolute path to .sqlite-Database
 const database = __dirname + '/../data/data.sqlite';
 
+// Load module
 var sqlite3 = require('sqlite3').verbose();
 
+// Recordset of new user
 var newuser = [
     {"ID": 0, "NAME": "Fritz", "DESC": "User", "ACTIVE": 0},
     {"ID": 0, "NAME": "Max", "DESC": "User", "ACTIVE": 0},
@@ -33,13 +37,15 @@ let db = new sqlite3.Database(database, (err) => {
 // Insert new rows using db.run()
 newuser.forEach((value) => {
     sql = `INSERT INTO user (NAME, DESC, ACTIVE) VALUES ('${value.NAME}','${value.DESC}',${value.ACTIVE})`;
-    db.run(sql, (err) => {
-        if (err)
-            console.log(err.message)
-        else {
-            console.log(`Insert: ${sql}`);
-        }
-    })
+    console.log(`Insert: ${sql}`);
+    if (false) {    // set to 'true' activates inserting
+        db.run(sql, (err) => {
+            if (err)
+                console.log(err.message)
+            else {
+            }
+        })            
+    }
 })
 
 // Start serialization using db.serialize()  
