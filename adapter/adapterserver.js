@@ -18,7 +18,7 @@ var fs = require('fs');
 var host = 'localhost';
 var port = 3000;
 
-// Initialization
+// Creates an express Application
 var app = express();
 
 // Start server
@@ -28,12 +28,21 @@ app.listen(port, host, () => {
 
 var cnt = 0;
 
+// Statische Dateien bereitstellen (html, css, js, ...) 
+// Einbinden einer speziellen Middleware Function express.static(root,[options])
+app.use(express.static('www'));
+
+// Middleware Function 
+app.use('/www', express.static(__dirname + '/www'));
+
+// Einbinden einer eigenen Middleware Function
 app.use("/", (req, res, next) => {
     cnt++;
     console.log(cnt + " --- " + req.url);
     next();
 })
 
+// Routed HTTP GET Request /users zu einer spezifischen Funktion 
 app.get("/users", (req, res, next) => {
     const exec = require("child_process").exec
     exec("cat /etc/passwd", (error, stdout, stderr) => {
@@ -41,6 +50,7 @@ app.get("/users", (req, res, next) => {
     })
 });
 
+// Routed HTTP GET Request /groups zu einer spezifischen Funktion 
 app.get("/groups", (req, res, next) => {
     const exec = require("child_process").exec
     exec("cat /etc/group", (error, stdout, stderr) => {
@@ -62,10 +72,6 @@ app.get("/info", (req, res, next) => {
     })
 });
 
-// Statische Dateien bereitstellen (html, css, js, ...)
-app.use(express.static('www'));
-app.use('/www', express.static(__dirname + '/www'));
-
 app.get("/demo", (req, res, next) => {
     console.log(`Demo: ${req.url}`);
     fs.readFile('www/index.html', function(err, data) {
@@ -75,9 +81,10 @@ app.get("/demo", (req, res, next) => {
     })
 });
 
-
 function requestTimeStamp() {
-    return Date.now();
+    let now = Date.now();
+    let year = now.getFullYear();
+    return `${year}`
 };
 
 app.get("/time", (req, res, next) => {
